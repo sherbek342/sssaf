@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/main.css'%}">
+</head>
+<body>
+
+        
+       
+        <form action="" method="POST">
+            
+            {% csrf_token%}
+        <div class="adding">
+            <h4>{{username}}dw</h4>
+            <input type="text" name="text" >
+            <button type="submit"><h5>Опубликировать</h5></button>
+        </div>
+        </form>
+
+        <div class="post">
+            {% for res in result %}
+            <div class="author">
+                {{res}}
+            </div>
+            {% endfor %}
+        </div>
+</body>
+</html>

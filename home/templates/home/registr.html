@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/main.css'%}">
+</head>
+<body>
+    
+
+    <div class="cont">
+
+        <div class="inputs">
+        
+            <form method="post">
+                
+                {% csrf_token %}
+                <input type="text" name="login" placeholder="login">
+                <input type="text" name="password" placeholder="parol">
+                <button type="submit">Регистрация</button>
+                
+            
+            </form>
+    </div>
+
+    </div>
+
+</body>
+</html>

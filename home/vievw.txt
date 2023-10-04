@@ -1,0 +1,80 @@
+from django.shortcuts import render
+import sqlite3
+
+username = ''
+
+# Create your views here.
+def home(request):
+    return render(request, 'home/home.html')
+
+def login(request):
+    db = sqlite3.connect('users.db')
+    c = db.cursor()
+    login = request.POST.get('login')
+    password = request.POST.get('password')
+    answer = "c"
+    c.execute(""" CREATE TABLE IF NOT EXISTS users (
+            login TEXT,
+            password TEXT
+    )""")
+    #
+
+
+
+    db.commit()
+
+    c.execute(f"SELECT login FROM users WHERE login = '{login}'")
+    if not c.fetchone() is None:
+        
+
+        c.execute(f"SELECT login, password FROM users WHERE login = '{login}'")
+        if c.fetchone()[1] == password:
+            return render(request, 'home/arp.html',{'username':username})
+        else:
+            answer='parol xato!!!!'
+
+    else:
+        answer='bunaqa foydalanuvchi mavjud emas!'
+
+          
+    
+    #
+    
+    
+    return render(request, 'home/login.html', {'answer':answer})
+
+def reg(request):
+    
+    db = sqlite3.connect('users.db')
+    c = db.cursor()
+    c.execute(""" CREATE TABLE IF NOT EXISTS users (
+            login TEXT,
+            password TEXT
+    )""")
+
+
+    login = request.POST.get('login')
+    password = request.POST.get('password')
+    answer = f'{login} and {password}'
+    c.execute(f'INSERT INTO users VALUES ("{login}", "{password}")')
+    db.commit()
+    db.close()
+    return render(request, 'home/registr.html', {'answer':answer})
+
+def add(request):
+    db = sqlite3.connect('text.db')
+    c = db.cursor()
+    global login
+    login = request.POST.get('login')
+    username = login
+    db.execute(f""" CREATE TABLE IF NOT EXISTS text(
+               name TEXT,
+               body TEXT
+    )
+                       
+    """)
+    db.commit()
+    text = request.POST.get('text')
+    c.execute(f"INSERT INTO text VALUES ('{username}', '{text}')")
+    db.commit()
+    return render(request, 'home/add.html',{'username':username})
